@@ -75,6 +75,81 @@
       color: #00f0ff;
     }
 
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 5px;
+      background: none;
+      border: none;
+    }
+
+    .mobile-menu-btn span {
+      width: 25px;
+      height: 3px;
+      background: #00f0ff;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    /* Mobile Menu Overlay */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 999;
+      transition: left 0.3s ease;
+      padding-top: 100px;
+    }
+
+    .mobile-menu.active {
+      left: 0;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .mobile-menu li {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .mobile-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5em;
+      font-weight: bold;
+      display: block;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.1);
+    }
+
     /* Hero Section */
     .hero {
       min-height: 100vh;
@@ -339,6 +414,10 @@
         display: none;
       }
 
+      .mobile-menu-btn {
+        display: flex;
+      }
+
       .hero h1 {
         font-size: 2.5em;
       }
@@ -367,6 +446,14 @@
       section h2 {
         font-size: 2em;
       }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Scroll Animation */
@@ -379,6 +466,96 @@
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* VLF Chat Widget Styles */
+    #chat-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #00f0ff, #a855f7);
+        color: #000;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    #chat-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(0, 240, 255, 0.5);
+    }
+
+    #chat-modal {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        width: 400px;
+        height: 600px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        z-index: 1001;
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        overflow: hidden;
+    }
+
+    #chat-modal iframe {
+        width: 100%;
+        height: 550px;
+        border: none;
+    }
+
+    .chat-header {
+        background: linear-gradient(135deg, #00f0ff, #a855f7);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #000;
+        padding: 0;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+    }
+
+    .close-btn:hover {
+        background-color: rgba(0,0,0,0.1);
+    }
+
+    /* Mobile responsiveness for chat */
+    @media (max-width: 768px) {
+        #chat-modal {
+            width: 90vw;
+            height: 70vh;
+            right: 5vw;
+            bottom: 80px;
+        }
+        
+        #chat-toggle {
+            bottom: 15px;
+            right: 15px;
+            padding: 12px 16px;
+            font-size: 13px;
+        }
     }
   </style>
 </head>
@@ -394,7 +571,23 @@
       <li><a href="#mission">Our Mission</a></li>
       <li><a href="#contact">Get Started</a></li>
     </ul>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+      <li><a href="#why-us" onclick="closeMobileMenu()">Why Us</a></li>
+      <li><a href="church-ministry.html" onclick="closeMobileMenu()">Church Ministry</a></li>
+      <li><a href="#mission" onclick="closeMobileMenu()">Our Mission</a></li>
+      <li><a href="#contact" onclick="closeMobileMenu()">Get Started</a></li>
+    </ul>
+  </div>
 
   <section class="hero">
     <h1>Virtual Labor Force</h1>
@@ -548,8 +741,77 @@
   </p>
  </footer>
 
+  <!-- VLF AI Chat Widget -->
+  <div id="vlf-chat-widget">
+      <button id="chat-toggle" onclick="toggleVLFChat()">
+          <span>💬 Chat with AI</span>
+      </button>
+      <div id="chat-modal" style="display: none;">
+          <div class="chat-header">
+              <span>Virtual Labor Force AI Assistant</span>
+              <button class="close-btn" onclick="toggleVLFChat()">×</button>
+          </div>
+          <iframe id="chat-iframe" src="https://vlf-chatbot.onrender.com" frameborder="0"></iframe>
+      </div>
+  </div>
 
   <script>
+    // Mobile Menu Functions
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      
+      menu.classList.toggle('active');
+      btn.classList.toggle('active');
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      
+      menu.classList.remove('active');
+      btn.classList.remove('active');
+    }
+
+    // Chat Functions
+    function toggleVLFChat() {
+        const modal = document.getElementById('chat-modal');
+        const isVisible = modal.style.display === 'block';
+        
+        if (isVisible) {
+            modal.style.display = 'none';
+        } else {
+            modal.style.display = 'block';
+            // Reload iframe when opening to ensure fresh session
+            const iframe = document.getElementById('chat-iframe');
+            iframe.src = iframe.src;
+        }
+    }
+
+    // Close chat when clicking outside the modal
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('chat-modal');
+        const toggle = document.getElementById('chat-toggle');
+        
+        if (modal.style.display === 'block' && 
+            !modal.contains(event.target) && 
+            !toggle.contains(event.target)) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const menu = document.getElementById('mobileMenu');
+        const btn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        if (menu.classList.contains('active') && 
+            !nav.contains(event.target)) {
+            closeMobileMenu();
+        }
+    });
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -579,138 +841,5 @@
       observer.observe(el);
     });
   </script>
-  <!-- VLF AI Chat Widget -->
-<div id="vlf-chat-widget">
-    <button id="chat-toggle" onclick="toggleVLFChat()">
-        <span>💬 Chat with AI</span>
-    </button>
-    <div id="chat-modal" style="display: none;">
-        <div class="chat-header">
-            <span>Virtual Labor Force AI Assistant</span>
-            <button class="close-btn" onclick="toggleVLFChat()">×</button>
-        </div>
-        <iframe id="chat-iframe" src="https://vlf-chatbot.onrender.com" frameborder="0"></iframe>
-    </div>
-</div>
-
-<style>
-/* VLF Chat Widget Styles */
-#chat-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #00f0ff, #a855f7);
-    color: #000;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
-    z-index: 1000;
-    transition: all 0.3s ease;
-}
-
-#chat-toggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 240, 255, 0.5);
-}
-
-#chat-modal {
-    position: fixed;
-    bottom: 100px;
-    right: 20px;
-    width: 400px;
-    height: 600px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    z-index: 1001;
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    overflow: hidden;
-}
-
-#chat-modal iframe {
-    width: 100%;
-    height: 550px;
-    border: none;
-}
-
-.chat-header {
-    background: linear-gradient(135deg, #00f0ff, #a855f7);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #000;
-    font-weight: bold;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #000;
-    padding: 0;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-}
-
-.close-btn:hover {
-    background-color: rgba(0,0,0,0.1);
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    #chat-modal {
-        width: 90vw;
-        height: 70vh;
-        right: 5vw;
-        bottom: 80px;
-    }
-    
-    #chat-toggle {
-        bottom: 15px;
-        right: 15px;
-        padding: 12px 16px;
-        font-size: 13px;
-    }
-}
-</style>
-
-<script>
-function toggleVLFChat() {
-    const modal = document.getElementById('chat-modal');
-    const isVisible = modal.style.display === 'block';
-    
-    if (isVisible) {
-        modal.style.display = 'none';
-    } else {
-        modal.style.display = 'block';
-        // Reload iframe when opening to ensure fresh session
-        const iframe = document.getElementById('chat-iframe');
-        iframe.src = iframe.src;
-    }
-}
-
-// Close chat when clicking outside the modal
-document.addEventListener('click', function(event) {
-    const modal = document.getElementById('chat-modal');
-    const toggle = document.getElementById('chat-toggle');
-    
-    if (modal.style.display === 'block' && 
-        !modal.contains(event.target) && 
-        !toggle.contains(event.target)) {
-        modal.style.display = 'none';
-    }
-});
-</script>
 </body>
 </html>
